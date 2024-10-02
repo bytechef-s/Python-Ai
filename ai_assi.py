@@ -10,6 +10,7 @@ import socket, sys, os, re, random, optparse, time, io
 import logging
 import webbrowser
 import ipaddress
+import speedtest
 
 
 # Configure logging
@@ -474,7 +475,35 @@ def namp_scanner():
             print(f"PortScannerError: {e}")
         except Exception as e:
             print(f"An error occurred: {e}")
+
+def test_speedtest_setup():
+        try:
+            st = speedtest.Speedtest()
+
+
+            best_server = st.get_best_server()
+            print(f"Connected to {best_server['host']} located in {best_server['country']}.")
+
+            return True
+        except Exception as e:
+            print(f"Error during speedtest setup: {e}")
+            return False
         
+def check_internet_speed():
+        st = speedtest.Speedtest()
+
+        st.get_best_server()
+
+
+        download_speed = st.download() / 1_000_000  
+        upload_speed = st.upload() / 1_000_000      
+
+
+        return {
+            'download_speed_mbps': round(download_speed, 2),
+            'upload_speed_mbps': round(upload_speed, 2)
+        }
+
        
 def note_down_ophelia():
     
@@ -502,13 +531,6 @@ def check_superuser():
         print("Please run the script with 'sudo' or as an administrator.")
         sys.exit(1)
 
-    
-    
-    def check_superuser():
-        if os.geteuid() != 0:
-            print("This script requires superuser privileges to run.")
-            print("Please run the script with 'sudo' or as an administrator.")
-            sys.exit(1)  # Exit the script with 
     
 
     try:import nmap
@@ -710,6 +732,7 @@ def help_ophelia():
               pentest list : to open penetration testing search engine and other tool 
                               list and browsing you want 
             error fix python env:that will error fix the env of python3
+            internet speed : to check internet speed 
           """)
 
 def main():
@@ -802,6 +825,12 @@ def main():
             
         elif "clear" in user_input:
             os.system('cls' if os.name == 'nt' else 'clear')
+
+        elif "internet speed" in user_input:
+            test_speedtest_setup()
+            speeds = check_internet_speed()
+            print(f"Download speed: {speeds['download_speed_mbps']} Mbps")
+            print(f"Upload speed: {speeds['upload_speed_mbps']} Mbps")
         
         elif "exit" in user_input:
             print("Ophelia: Thank you for using the Assistant AI. Goodbye!")
