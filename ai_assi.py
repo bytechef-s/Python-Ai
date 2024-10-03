@@ -355,6 +355,40 @@ def vlc_installer():
     print("Now! We will install VLC-bin")
     os.system("sudo apt install vlc-bin")
     
+
+#respberry pi pico art    
+def raspberry_pi_pico_schematic_ascii_art():
+    ascii_art = r"""
+   Schematic Diagram
+   
+                |power usb|                           
+        +--------------------------+   
+        |     Raspberry Pi Pico     | 
+        |GP0                    VBUS| 
+        |GP1                    VSYS|  
+        |GND                     GND| 
+        |GP2                  3V3_EN| 
+        |GP3                 3V3_OUT|
+        |GP4                ADC_VREF| 
+        |GP5                 GP28_A2| 
+        |GND                    AGND|      
+        |GP6                 GP27_A1| 
+        |GP7                 GP26_A0| 
+        |GP8                     RUN| 
+        |GP9                    GP22| 
+        |GND                     GND| 
+        |GP10                   GP21| 
+        |GP11                   GP20| 
+        |GP12  K          0     GP19| 
+        |GP13  L          1     GP18| 
+        |GND   C          D      GND| 
+        |GP14  W          W     GP17| 
+        |GP15  S    GND   S     GP16| 
+        |      |    |     |         | 
+        +--------------------------+
+
+    """
+    print(ascii_art)
     
 #scanning function
 def namp_scanner():
@@ -818,6 +852,9 @@ def main():
                 
         elif "pentest list"  in user_input:
             pentest_service()
+            
+        elif "respberry pico" == user_input:
+            raspberry_pi_pico_schematic_ascii_art()
             
         
         elif "help --ophelia" in user_input:
